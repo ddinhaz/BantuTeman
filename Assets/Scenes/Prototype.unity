@@ -2117,7 +2117,7 @@ GameObject:
   - component: {fileID: 1521042044}
   - component: {fileID: 1521042045}
   m_Layer: 0
-  m_Name: Finish
+  m_Name: Finish Manager
   m_TagString: Finish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
