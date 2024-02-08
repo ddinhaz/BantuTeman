@@ -104,4 +104,11 @@ public class ButtonSelected : MonoBehaviour
             OnButtonSelected(button);
         }
     }
+
+    // Fungsi untuk dipanggil saat panel baru dibuka untuk memilih tombol secara otomatis
+    public void OpenPanel()
+    {
+        // Pilih tombol pertama saat panel dibuka
+        SelectButton1();
+    }
 }

@@ -10,9 +10,6 @@ public class GameManager : MonoBehaviour
 
     private Text GameOverText;
 
-    public AudioSource SFXSource;
-    public AudioClip ButtonSfx;
-
     private void Start()
     {
         // Pastikan panel win dan lose dimatikan pada awalnya
@@ -21,17 +18,6 @@ public class GameManager : MonoBehaviour
         // Dapatkan komponen Text pada panel win dan lose
         GameOverText = GameOver.GetComponentInChildren<Text>();
     }
-
-    private void Update()
-    {
-        // Memainkan SFX setiap kali tombol keyboard ditekan
-        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
-        {
-            SFXSource.clip = ButtonSfx;
-            SFXSource.Play();
-        }
-    }
-
 
     public void PlayerCrossedFinishLine(GameObject player)
     {
@@ -51,6 +37,13 @@ public class GameManager : MonoBehaviour
 
         // Lakukan tindakan lanjutan seperti menonaktifkan kontrol pemain atau menampilkan pesan kekalahan
         // ...
+    }
+
+    // Fungsi untuk me-restart permainan dengan memuat kembali scene saat ini
+    public void RestartGame()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.name);
     }
 
 }

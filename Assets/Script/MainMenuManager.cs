@@ -9,12 +9,29 @@ public class MainMenuManager : MonoBehaviour
 {
     public GameObject CreditsPanel;
 
+    public AudioSource audioSource;
+    public AudioClip button;
+    public AudioClip enter;
+
     void Start()
     {
         // Menutup panel saat game dimulai
         if (CreditsPanel != null)
         {
             CreditsPanel.SetActive(false);
+        }
+    }
+
+    private void Update()
+    {
+        // Memainkan SFX setiap kali tombol keyboard ditekan
+        if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.S))
+        {
+            PlaySound(button);
+        }
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            PlaySound(enter);
         }
     }
 
@@ -40,5 +57,14 @@ public class MainMenuManager : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene("Level 1");
+    }
+
+    // Fungsi untuk memainkan efek suara
+    void PlaySound(AudioClip sound)
+    {
+        if (audioSource != null && sound != null)
+        {
+            audioSource.PlayOneShot(sound);
+        }
     }
 }
