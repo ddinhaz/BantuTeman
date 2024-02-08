@@ -2,49 +2,43 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using TMPro;
 
 public class MainMenuManager : MonoBehaviour
 {
-    public Button blinkingButton;
-    private bool isBlinking = false;
+    public GameObject CreditsPanel;
 
     void Start()
     {
-        // Mulai fungsi kedipan
-        StartBlinking();
-    }
-
-    void StartBlinking()
-    {
-        isBlinking = true;
-        StartCoroutine(Blink());
-    }
-
-    void StopBlinking()
-    {
-        isBlinking = false;
-    }
-
-    IEnumerator Blink()
-    {
-        while (isBlinking)
+        // Menutup panel saat game dimulai
+        if (CreditsPanel != null)
         {
-            blinkingButton.interactable = !blinkingButton.interactable; // Toggle keadaan tombol
-
-            yield return new WaitForSeconds(0.5f); // Tunggu 0.5 detik
+            CreditsPanel.SetActive(false);
         }
     }
 
-    // Panggil fungsi ini dari tombol atau event lainnya untuk mengaktifkan atau menonaktifkan kedipan
-    public void ToggleBlinking()
+    // Fungsi untuk membuka atau menutup panel
+    public void ShowCreditsPanel()
     {
-        if (isBlinking)
+        if (CreditsPanel != null)
         {
-            StopBlinking();
+            CreditsPanel.SetActive(!CreditsPanel.activeSelf);
         }
-        else
+    }
+
+    // Fungsi untuk menutup panel
+    public void CloseCreditPanel()
+    {
+        if (CreditsPanel != null && CreditsPanel.activeSelf)
         {
-            StartBlinking();
+            CreditsPanel.SetActive(false);
         }
+    }
+
+    // Fungsi untuk memulai game
+    public void PlayGame()
+    {
+        SceneManager.LoadScene("Level 1");
     }
 }
