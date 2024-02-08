@@ -4,7 +4,8 @@ public class SkillMovement : MonoBehaviour
 {
     public float MoveSpeed;
     public float JumpForce;
-    private bool canJump = false;
+    [SerializeField]
+    public bool canJump = false;
     private bool hasJumped = false;
     public Collider2D area;
     public GameObject player;
@@ -81,14 +82,13 @@ public class SkillMovement : MonoBehaviour
         transform.position = new Vector2(x, y);
     }
 
-
-
     void UpdateAnimasi()
     {
         if (hasJumped)
         {
             sprite.flipX = false;
             state = jumpAnim.Playerr;
+            
         }
         else
         {

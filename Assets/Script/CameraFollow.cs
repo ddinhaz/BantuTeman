@@ -24,7 +24,8 @@ public class CameraFollow : MonoBehaviour
             // Jika pemain bergerak ke arah kanan, kamera akan mengikuti pemain
             if (targetX > cameraX)
             {
-                transform.position = new Vector3(targetX, initialY, transform.position.z);
+                transform.position = new Vector3(Mathf.Clamp(player.position.x, -2.26f, 2.6f), initialY, transform.position.z);
+                
             }
         }
     }
