@@ -11,11 +11,24 @@ public class MovementMusuh : MonoBehaviour
     private bool isStunned = false;
     private float stunTimer = 0f;
     public float stunDuration = 2f;
+    private Animator anim;
+    private SpriteRenderer sprite;
+
+    private enum jumpAnime { musuh_idle, musuh_movement, musuh_jump, no_animation };
+    private jumpAnime state = jumpAnime.musuh_idle;
+    private jumpAnime previousState; // Menyimpan state animasi sebelum terkena bola
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         StartCoroutine(AutoJumpAndMove());
+        anim = GetComponent<Animator>();
+        sprite = GetComponent<SpriteRenderer>();
+    }
+
+    void Update()
+    {
+        UpdateAnimasi();
     }
 
     IEnumerator AutoJumpAndMove()
@@ -48,6 +61,8 @@ public class MovementMusuh : MonoBehaviour
     {
         isStunned = true;
         stunTimer = duration;
+        previousState = state; // Simpan state animasi sebelum terkena bola
+        state = jumpAnime.musuh_movement;
         StartCoroutine(StunTimer());
     }
 
@@ -55,5 +70,28 @@ public class MovementMusuh : MonoBehaviour
     {
         yield return new WaitForSeconds(stunTimer);
         isStunned = false;
+        state = previousState; // Kembalikan state animasi ke keadaan sebelumnya setelah stun selesai
+    }
+
+    void UpdateAnimasi()
+    {
+        // Periksa apakah state adalah no_animation untuk menentukan apakah animasi harus dijalankan
+        if (state != jumpAnime.no_animation)
+        {
+            // Periksa apakah kecepatan horizontal lebih besar dari 0.1 untuk menentukan gerakan
+            if (Mathf.Abs(rb.velocity.x) > 0.1f)
+            {
+                state = jumpAnime.musuh_movement;
+            }
+            else if (isStunned)
+            {
+                state = jumpAnime.musuh_idle;
+            }
+            else
+            {
+                state = jumpAnime.musuh_jump;
+            }
+        }
+        anim.SetInteger("state", (int)state);
     }
 }

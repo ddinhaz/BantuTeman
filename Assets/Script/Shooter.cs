@@ -44,6 +44,6 @@ public class Shooter : MonoBehaviour
         Rigidbody2D rb = bullet.GetComponent<Rigidbody2D>();
         rb.velocity = Vector2.down * bulletSpeed;
 
-        Destroy(bullet, 0.5f);
+        Destroy(bullet, 0.3f);
     }
 }

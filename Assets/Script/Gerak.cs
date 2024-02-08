@@ -3,44 +3,26 @@ using UnityEngine;
 public class Gerak : MonoBehaviour
 {
     public float MoveSpeed = 3f;
-    private float minX, maxX;
-    private bool movingRight = true;
-
-    void Start()
-    {
-        // Mendapatkan lebar layar dalam satuan koordinat dunia
-        float screenWidthInWorldUnits = Camera.main.orthographicSize * 2 * Camera.main.aspect;
-        
-        // Menghitung batas minimal dan maksimal pergerakan
-        minX = -screenWidthInWorldUnits / 2;
-        maxX = screenWidthInWorldUnits / 2;
-    }
+    private bool moveRight = true;
 
     void Update()
     {
-        // Mengambil posisi objek saat ini
-        Vector3 currentPosition = transform.position;
-        
-        // Menggerakkan objek ke kanan atau kiri dengan kecepatan yang ditentukan
-        if (movingRight)
+        if (moveRight)
         {
-            currentPosition.x += MoveSpeed * Time.deltaTime;
+            transform.Translate(Vector2.right * MoveSpeed * Time.deltaTime);
         }
         else
         {
-            currentPosition.x -= MoveSpeed * Time.deltaTime;
+            transform.Translate(Vector2.left * MoveSpeed * Time.deltaTime);
         }
-        
-        // Memastikan objek tetap dalam batasan pergerakan
-        currentPosition.x = Mathf.Clamp(currentPosition.x, minX, maxX);
-        
-        // Mengatur posisi objek yang telah di-update
-        transform.position = currentPosition;
+    }
 
-        // Membalik arah pergerakan jika objek mencapai batas kiri atau kanan
-        if (currentPosition.x >= maxX || currentPosition.x <= minX)
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        // Mengubah arah pergerakan jika menyentuh objek dengan tag "Obstacle"
+        if (collision.gameObject.CompareTag("Halangan"))
         {
-            movingRight = !movingRight;
+            moveRight = !moveRight; // Putar balik arah pergerakan
         }
     }
 }

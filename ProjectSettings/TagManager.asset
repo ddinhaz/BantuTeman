@@ -9,15 +9,16 @@ TagManager:
   - B
   - Enemy
   - Bola
+  - Halangan
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Enemy
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Bar
   - 
   - 
   - 
