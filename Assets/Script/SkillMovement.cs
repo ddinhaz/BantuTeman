@@ -18,7 +18,7 @@ public class SkillMovement : MonoBehaviour
  
     void Update()
     {
-        if (player != null && Input.GetKeyDown(KeyCode.UpArrow) && canJump && !hasJumped)
+        if (player != null && Input.GetKeyDown(KeyCode.Space) && canJump && !hasJumped)
         {
             Jump();
         }

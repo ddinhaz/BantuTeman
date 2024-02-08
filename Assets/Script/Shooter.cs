@@ -2,9 +2,8 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 
-public class ShooterButton : MonoBehaviour
+public class Shooter : MonoBehaviour
 {
-    public Button button;
     public Text cooldownText;
     public float cooldownDuration = 3f;
     public GameObject bulletPrefab;
@@ -13,30 +12,26 @@ public class ShooterButton : MonoBehaviour
 
     private bool isCooldown = false;
 
-    void Start()
+    void Update()
     {
-        button.onClick.AddListener(OnButtonClicked);
-        isCooldown = false;
-    }
-
-    void OnButtonClicked()
-    {
-        if (!isCooldown)
+        if (Input.GetKeyDown(KeyCode.Return)) // Menggunakan tombol Enter
         {
-            Shoot();
-            isCooldown = true;
+            if (!isCooldown)
+            {
+                Shoot();
+                isCooldown = true;
 
-            StartCoroutine(CooldownCoroutine());
-        }
-        else
-        {
-            cooldownText.text = "Sedang cooldown.";
+                StartCoroutine(CooldownCoroutine());
+            }
+            else
+            {
+                cooldownText.text = "Sedang cooldown.";
+            }
         }
     }
 
     IEnumerator CooldownCoroutine()
     {
-
         yield return new WaitForSeconds(cooldownDuration);
 
         isCooldown = false;
