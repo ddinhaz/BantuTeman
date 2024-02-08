@@ -8,40 +8,50 @@ public class SkillMovement : MonoBehaviour
     private bool hasJumped = false;
     public Collider2D area;
     public GameObject player;
+    private Animator anim;
+    private SpriteRenderer sprite; // Deklarasi SpriteRenderer
 
     private Rigidbody2D playerRb;
+    private enum jumpAnim { player_idle, Playerr, player_run };
+    private jumpAnim state = jumpAnim.player_idle;
 
     void Start()
     {
         playerRb = player.GetComponent<Rigidbody2D>();
+        anim = player.GetComponent<Animator>(); // Mengambil Animator dari player
+        sprite = GetComponent<SpriteRenderer>(); // Tetap inisialisasi SpriteRenderer
     }
- 
+
     void Update()
     {
         if (player != null && Input.GetKeyDown(KeyCode.Space) && canJump && !hasJumped)
         {
-            Jump();
+            UpdateAnimasi();
+            JumpAction();
+
         }
     }
 
-    void Jump()
+    void JumpAction()
     {
+        state = jumpAnim.Playerr;
         playerRb.velocity = new Vector2(MoveSpeed, JumpForce);
-        hasJumped = true; 
+        hasJumped = true;
         RandomizePosition();
     }
 
+
     void OnTriggerEnter2D(Collider2D other)
-    {    
+    {
         if (other.CompareTag("B"))
         {
             canJump = true;
-            hasJumped = false; 
-        }   
+            hasJumped = false;
+        }
     }
 
     void OnTriggerExit2D(Collider2D other)
-    {   
+    {
         if (other.CompareTag("B"))
         {
             canJump = false;
@@ -54,17 +64,41 @@ public class SkillMovement : MonoBehaviour
         {
             hasJumped = false;
         }
-    }    
+    }
 
     public void RandomizePosition()
     {
         Bounds bounds = area.bounds;
 
-        float y = transform.position.y;
-        float x = Random.Range(bounds.min.x, bounds.max.x);
+        float areaWidth = bounds.max.x - bounds.min.x;
+        float x = Random.Range(bounds.min.x, bounds.min.x + areaWidth);
 
+        float y = transform.position.y; // Dapatkan nilai y dari posisi objek saat ini
+
+    // Pembulatan nilai x agar posisi berada pada grid (opsional)
         x = Mathf.Round(x);
 
         transform.position = new Vector2(x, y);
     }
+
+
+
+    void UpdateAnimasi()
+    {
+        if (hasJumped)
+        {
+            sprite.flipX = false;
+            state = jumpAnim.Playerr;
+        }
+        else
+        {
+            state = jumpAnim.player_idle;
+        }
+        if (MoveSpeed > .1f)
+        {
+            state = jumpAnim.player_run;
+        }
+        anim.SetInteger("state", (int)state);
+    }
+
 }
