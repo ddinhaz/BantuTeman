@@ -57,6 +57,7 @@ public class MainMenuManager : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene("Level 1");
+        Time.timeScale = 1;
     }
 
     // Fungsi untuk memainkan efek suara

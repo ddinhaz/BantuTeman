@@ -172,3 +172,4 @@ MonoBehaviour:
   firePoint: {fileID: 0}
   bulletSpeed: 15
   cooldownTime: 4
+  lastFireTime: 0

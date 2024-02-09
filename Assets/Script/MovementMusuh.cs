@@ -42,6 +42,7 @@ public class MovementMusuh : MonoBehaviour
             else
             {
                 rb.velocity = Vector2.zero;
+                state = jumpAnime.musuh_idle;
             }
 
             yield return new WaitForSeconds(JumpDelay);
@@ -76,12 +77,12 @@ public class MovementMusuh : MonoBehaviour
     void UpdateAnimasi()
     {
         // Periksa apakah state adalah no_animation untuk menentukan apakah animasi harus dijalankan
-        if (state != jumpAnime.no_animation)
+        if (state != jumpAnime.musuh_idle)
         {
             // Periksa apakah kecepatan horizontal lebih besar dari 0.1 untuk menentukan gerakan
             if (Mathf.Abs(rb.velocity.x) > 0.1f)
             {
-                state = jumpAnime.musuh_movement;
+                state = jumpAnime.musuh_idle;
             }
             else if (isStunned)
             {

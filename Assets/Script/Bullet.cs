@@ -38,7 +38,7 @@ public class Bullet : MonoBehaviour
         if(CompareTag("Enemy") || CompareTag("Ground"))
         {
             GameObject box = Instantiate(boxPrefab, firePoint.position, Quaternion.identity);
-            Destroy(box, 3f); // Menghancurkan objek kotak setelah waktu tertentu
+            Destroy(box, 0.3f); // Menghancurkan objek kotak setelah waktu tertentu
         }
     }
 }
